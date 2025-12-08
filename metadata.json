@@ -1,0 +1,7 @@
+{
+  "name": "Mech Control",
+  "description": "Real-time hand tracking feed using MediaPipe.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
