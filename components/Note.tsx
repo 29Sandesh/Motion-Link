@@ -6,17 +6,10 @@
 
 import React, { useMemo, useRef } from 'react';
 import { Extrude, Octahedron } from '@react-three/drei';
-import { useFrame, ThreeElements } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Shape, Group, Mesh, MeshBasicMaterial } from 'three';
 import { NoteData, COLORS } from '../types';
 import { LANE_X_POSITIONS, LAYER_Y_POSITIONS, NOTE_SIZE } from '../constants';
-
-// Fix for R3F elements not being recognized in JSX
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 interface NoteProps {
   data: NoteData;

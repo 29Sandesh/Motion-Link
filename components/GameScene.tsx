@@ -5,20 +5,13 @@
 
 
 import React, { useRef, useState, useMemo, useEffect } from 'react';
-import { useFrame, useThree, ThreeElements } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { Environment, Grid, PerspectiveCamera, Stars } from '@react-three/drei';
 import { Vector3, MathUtils, PerspectiveCamera as ThreePerspectiveCamera, AmbientLight, SpotLight } from 'three';
 import { GameStatus, NoteData, HandPositions, COLORS, CutDirection } from '../types';
 import { PLAYER_Z, SPAWN_Z, MISS_Z, NOTE_SPEED, DIRECTION_VECTORS, NOTE_SIZE, LANE_X_POSITIONS, LAYER_Y_POSITIONS, SONG_BPM } from '../constants';
 import Note from './Note';
 import Saber from './Saber';
-
-// Fix for R3F elements not being recognized in JSX
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 interface GameSceneProps {
   gameStatus: GameStatus;

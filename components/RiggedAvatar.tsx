@@ -4,17 +4,10 @@
 */
 
 import React, { useRef, useMemo } from 'react';
-import { useFrame, ThreeElements } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { RoundedBox } from '@react-three/drei';
 import { MeshStandardMaterial, MeshBasicMaterial, MeshPhysicalMaterial, Vector3, Group, Mesh } from 'three';
 import { HandLandmarkerResult, PoseLandmarkerResult } from '@mediapipe/tasks-vision';
-
-// Fix for R3F elements not being recognized in JSX
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 interface RiggedAvatarProps {
   handResultsRef: React.MutableRefObject<HandLandmarkerResult | null>;

@@ -20,7 +20,7 @@ const mapHandToWorld = (x: number, y: number): Vector3 => {
   return new Vector3(worldX, Math.max(0.1, worldY), worldZ);
 };
 
-export const useMediaPipe = (videoRef: React.RefObject<HTMLVideoElement | null>) => {
+export const useMediaPipe = (videoRef: React.RefObject<HTMLVideoElement | null>, enabled: boolean = true) => {
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,6 +51,9 @@ export const useMediaPipe = (videoRef: React.RefObject<HTMLVideoElement | null>)
 
     const setupMediaPipe = async () => {
       try {
+        // Don't initialize if not enabled
+        if (!enabled) return;
+
         const vision = await FilesetResolver.forVisionTasks(
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.9/wasm"
         );
@@ -146,20 +149,28 @@ export const useMediaPipe = (videoRef: React.RefObject<HTMLVideoElement | null>)
         requestRef.current = requestAnimationFrame(predictWebcam);
     };
 
-    // Helper for legacy game logic compatibility
     const processHandForGame = (results: HandLandmarkerResult) => {
         // ... (Existing logic for game velocity, kept for compatibility if needed later)
     };
 
-    setupMediaPipe();
+    if (enabled) {
+      setupMediaPipe();
+    }
 
     return () => {
       isActive = false;
       if (requestRef.current) cancelAnimationFrame(requestRef.current);
       if (handLandmarkerRef.current) handLandmarkerRef.current.close();
       if (poseLandmarkerRef.current) poseLandmarkerRef.current.close();
+      
+      // Cleanup pointers if disabled
+      if (!enabled) {
+          handLandmarkerRef.current = null;
+          poseLandmarkerRef.current = null;
+          setIsCameraReady(false);
+      }
     };
-  }, [videoRef]);
+  }, [videoRef, enabled]);
 
   return { isCameraReady, lastResultsRef, lastPoseRef, error };
 };

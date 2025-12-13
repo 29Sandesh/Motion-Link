@@ -5,16 +5,9 @@
 
 
 import React, { useRef } from 'react';
-import { useFrame, ThreeElements } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import { Vector3, Euler, MathUtils, Group, DoubleSide } from 'three';
 import { HandType, COLORS } from '../types';
-
-// Fix for R3F elements not being recognized in JSX
-declare global {
-  namespace JSX {
-    interface IntrinsicElements extends ThreeElements {}
-  }
-}
 
 interface SaberProps {
   type: HandType;
